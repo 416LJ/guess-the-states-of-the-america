@@ -8,4 +8,4 @@
                                                                             
 ```
 
-This is a Python game built with the Turtle Library.
+This is a Python game built with the Turtle and Pandas Library.
