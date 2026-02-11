@@ -16,6 +16,8 @@ wrong_answer = t.Turtle()
 wrong_answer.penup()
 wrong_answer.hideturtle()
 wrong_ans = 10
+
+
 def check_ans():
     wrong_answer.clear()
     wrong_answer.goto(x=0, y=-300)
@@ -27,14 +29,15 @@ def check_ans():
                        align="center", move=False)
 
 while game_is_on:
-    answer = screen.textinput(prompt=f"GUESS ANOTHER STATE", title=f"GUESS A STATE : {correct_guesses}/{len(states)} : Turns left : {wrong_ans}").title()
+    answer = screen.textinput(prompt=f"GUESS ANOTHER STATE", title=f"GUESS A STATE : {correct_guesses}/{len(states)} : Turns left : {wrong_ans}")
+    answer = answer.title()
     if answer == "Exit":
         exit()
     if answer in states:
         states_known.append(answer)
         wrong_answer.clear()
-        location_x = float(states_data[states_data.state == answer].x)
-        location_y = float(states_data[states_data.state == answer].y)
+        location_x = list(states_data[states_data.state == answer].x)[0]
+        location_y = list(states_data[states_data.state == answer].y)[0]
         locater_turtle = t.Turtle()
         locater_turtle.penup()
         locater_turtle.hideturtle()
@@ -63,6 +66,7 @@ if correct_guesses == len(states):
 if wrong_ans == 0:
     final_msg.write(arg=f"You ran out of tries.", font=('Ariel', 30, 'bold'),
                     align="center", move=False)
+
     unknown_states = list(set(states) - set(states_known))
     new_data = pd.DataFrame(unknown_states)
     new_data.to_csv("states_to_learn.csv")
